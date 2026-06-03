@@ -70,7 +70,7 @@ def salvar_no_banco(dados_cotacao):
 
 
 # --- Execução Principal do Script ---
-git config --global user.name "Seu Nome" __name__ == "__main__":
+if __name__ == "__main__":
     print("Iniciando o script de automação...")
     criar_banco()
     cotacoes_atuais = buscar_cotacoes()
