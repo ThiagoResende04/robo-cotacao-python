@@ -10,3 +10,7 @@ Este projeto é um script automatizado desenvolvido em Python que coleta as cota
 ## Como executar
 1. Instale as dependências: `pip install requests`
 2. Execute o script: `python rastreador_moedas.py`
+
+
+
+<img width="1285" height="335" alt="Rastreador de moedas" src="https://github.com/user-attachments/assets/d8909f34-80f0-4a65-b09e-68aed684709b" />
