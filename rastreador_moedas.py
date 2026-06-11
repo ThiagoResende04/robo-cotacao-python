@@ -5,11 +5,11 @@ import requests
 
 def criar_banco():
     """Cria o banco de dados SQLite e a tabela se não existirem."""
-    
+    # Conecta ao arquivo de banco de dados (será criado na mesma pasta)
     conexao = sqlite3.connect("cotacoes.db")
     cursor = conexao.cursor()
 
-    
+    # Cria a tabela usando comandos SQL clássicos
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS historico_moedas (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -26,18 +26,19 @@ def criar_banco():
 
 def buscar_cotacoes():
     """Acessa a API de economia para buscar o valor atual do Dólar e Euro."""
-    url = "https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL"
+    url = "https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL,GBP-BRL"
 
     try:
         # Automação via requisição HTTP (sem precisar abrir o navegador)
         resposta = requests.get(url)
         dados = resposta.json()
 
-        
+        # Extraindo as informações do formato JSON recebido
         preco_dolar = float(dados["USDBRL"]["bid"])
         preco_euro = float(dados["EURBRL"]["bid"])
+        preco_libra = float(dados["GBPBRL"]["bid"])
 
-        return {"USD": preco_dolar, "EUR": preco_euro}
+        return {"USD": preco_dolar, "EUR": preco_euro, "GBP": preco_libra,}
 
     except Exception as e:
         print(f"Erro ao buscar cotações: {e}")
@@ -53,7 +54,7 @@ def salvar_no_banco(dados_cotacao):
     cursor = conexao.cursor()
     data_atual = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    
+    # Inserindo os dados usando SQL (INSERT INTO)
     for moeda, valor in dados_cotacao.items():
         cursor.execute(
             """
@@ -69,7 +70,7 @@ def salvar_no_banco(dados_cotacao):
     conexao.close()
 
 
-
+# --- Execução Principal do Script ---
 if __name__ == "__main__":
     print("Iniciando o script de automação...")
     criar_banco()
