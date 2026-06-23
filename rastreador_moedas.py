@@ -5,7 +5,7 @@ import requests
 
 def criar_banco():
     """Cria o banco de dados SQLite e a tabela se não existirem."""
-    # Conecta ao arquivo de banco de dados (será criado na mesma pasta)
+    # Conecta ao arquivo de banco de dados
     conexao = sqlite3.connect("cotacoes.db")
     cursor = conexao.cursor()
 
@@ -29,7 +29,7 @@ def buscar_cotacoes():
     url = "https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL,GBP-BRL"
 
     try:
-        # Automação via requisição HTTP (sem precisar abrir o navegador)
+        # Automação via requisição HTTP
         resposta = requests.get(url)
         dados = resposta.json()
 
@@ -54,7 +54,7 @@ def salvar_no_banco(dados_cotacao):
     cursor = conexao.cursor()
     data_atual = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    # Inserindo os dados usando SQL (INSERT INTO)
+    # Inserindo os dados usando SQL 
     for moeda, valor in dados_cotacao.items():
         cursor.execute(
             """
